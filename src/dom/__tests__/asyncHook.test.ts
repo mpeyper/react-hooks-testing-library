@@ -101,6 +101,63 @@ describe('async hook tests', () => {
     expect(complete).toBe(true)
   })
 
+  test('should wait for arbitrary expectation to pass when use jest.usedFakeTimers() and advanceTimersByTime()', async () => {
+    try {
+      jest.useFakeTimers()
+
+      const { waitFor } = renderHook(() => null)
+
+      let actual = 0
+      const expected = 1
+
+      setTimeout(() => {
+        actual = expected
+      }, 200)
+      let complete = false
+      jest.advanceTimersByTime(200)
+      await waitFor(
+        () => {
+          expect(actual).toBe(expected)
+          complete = true
+        },
+        { timeout: 250, interval: 10 }
+      )
+
+      expect(complete).toBe(true)
+    } catch {
+    } finally {
+      jest.useRealTimers()
+    }
+  })
+  test('should wait for arbitrary expectation to pass when use jest.usedFakeTimers() and runOnlyPendingTimers() ', async () => {
+    try {
+      jest.useFakeTimers()
+
+      const { waitFor } = renderHook(() => null)
+
+      let actual = 0
+      const expected = 1
+
+      setTimeout(() => {
+        actual = expected
+      }, 200)
+      let complete = false
+      jest.runOnlyPendingTimers()
+      await waitFor(
+        () => {
+          expect(actual).toBe(expected)
+          complete = true
+        },
+        { timeout: 250, interval: 10 }
+      )
+
+      expect(complete).toBe(true)
+    } catch {
+    } finally {
+      jest.useRealTimers()
+    }
+  })
+
   test('should not hang if expectation is already passing', async () => {
     const { result, waitFor } = renderHook(() => useSequence(['first', 'second']))
 
