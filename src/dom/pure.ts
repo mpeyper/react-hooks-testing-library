@@ -12,21 +12,22 @@ function createDomRenderer<TProps, TResult>(
 ) {
   const container = document.createElement('div')
   const testHarness = createTestHarness(rendererProps, wrapper)
-
+  // @ts-ignore
+  const root = ReactDOM.createRoot(container)
   return {
     render(props?: TProps) {
       act(() => {
-        ReactDOM.render(testHarness(props), container)
+        root.render(testHarness(props))
       })
     },
     rerender(props?: TProps) {
       act(() => {
-        ReactDOM.render(testHarness(props), container)
+        root.render(testHarness(props))
       })
     },
     unmount() {
       act(() => {
-        ReactDOM.unmountComponentAtNode(container)
+        root.unmount()
       })
     },
     act

@@ -63,9 +63,9 @@
     "eslint": "7.31.0",
     "kcd-scripts": "11.2.0",
     "prettier": "^2.2.1",
-    "react": "17.0.2",
-    "react-dom": "^17.0.1",
-    "react-test-renderer": "17.0.2",
+    "react": "next",
+    "react-dom": "next",
+    "react-test-renderer": "next",
     "ts-node": "^10.0.0",
     "typescript": "4.3.5"
   },
